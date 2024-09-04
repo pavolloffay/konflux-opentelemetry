@@ -17,7 +17,7 @@ RUN  export VERSION_PKG="github.com/open-telemetry/opentelemetry-operator/intern
      export AUTO_INSTRUMENTATION_GO_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-go | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_GO_VERSION && \
      export AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-apache-httpd | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION && \
      export AUTO_INSTRUMENTATION_NGINX_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-nginx | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_NGINX_VERSION && \
-     CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -mod=mod -tags strictfipsruntime -o ./opentelemetry-operator  -ldflags "-X ${VERSION_PKG}.version=${GIT_LATEST_TAG_AND_SHA} -X ${VERSION_PKG}.buildDate=${BUILD_DATE} \
+     CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -mod=mod -tags strictfipsruntime -o ./opentelemetry-operator -trimpath -ldflags "-s -w -X ${VERSION_PKG}.version=${GIT_LATEST_TAG_AND_SHA} -X ${VERSION_PKG}.buildDate=${BUILD_DATE} \
               -X ${VERSION_PKG}.otelCol=${OTELCOL_VERSION} \
               -X ${VERSION_PKG}.targetAllocator=${TARGETALLOCATOR_VERSION} \
               -X ${VERSION_PKG}.operatorOpAMPBridge=${OPERATOR_OPAMP_BRIDGE_VERSION} \

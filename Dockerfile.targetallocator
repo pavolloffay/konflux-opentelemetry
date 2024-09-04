@@ -1,0 +1,30 @@
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_8_golang_1.22 as builder
+
+WORKDIR /opt/app-root/src
+COPY opentelemetry-operator .
+USER root
+
+RUN  CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -C ./cmd/otel-allocator -mod=mod -tags strictfipsruntime -o ./opentelemetry-target-allocator -trimpath -ldflags "-s -w"
+
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+
+RUN microdnf update -y && rm -rf /var/cache/yum && \
+    microdnf install openssl -y && \
+    microdnf clean all
+
+ARG USER_UID=1001
+USER ${USER_UID}
+
+COPY --from=builder /opt/app-root/src/cmd/otel-allocator/opentelemetry-operator /usr/bin/opentelemetry-target-allocator
+ENTRYPOINT ["/usr/bin/opentelemetry-target-allocator"]
+
+LABEL com.redhat.component="opentelemetry-target-allocator-container" \
+      name="rhosdt/opentelemetry-target-allocator-rhel8" \
+      summary="OpenTelemetry Target allocator" \
+      description="Prometheus target allocator for the OpenTelemetry collector" \
+      io.openshift.expose-services="80:http" \
+      io.openshift.tags="monitoring" \
+      io.k8s.display-name="OpenTelemetry Target allocator" \
+      maintainer="Jaeger Team <jaeger-prod@redhat.com>" \
+      version="0.0.0"
+# TODO set the version
