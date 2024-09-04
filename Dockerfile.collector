@@ -21,7 +21,7 @@ RUN useradd -u ${USER_UID} otelcol && usermod -a -G systemd-journal otelcol
 USER ${USER_UID}
 
 COPY --from=builder /opt/app-root/src/_build/otelcol /
-COPY configs/otelcol.yaml /etc/otelcol/config.yaml
+COPY redhat-opentelemetry-collector/configs/otelcol.yaml /etc/otelcol/config.yaml
 ENTRYPOINT ["/otelcol"]
 CMD ["--config", "/etc/otelcol/config.yaml"]
 EXPOSE 4317 55678 55679
