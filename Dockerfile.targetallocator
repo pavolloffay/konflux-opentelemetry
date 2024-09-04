@@ -30,7 +30,4 @@ LABEL com.redhat.component="opentelemetry-target-allocator-container" \
       description="Prometheus target allocator for the OpenTelemetry collector" \
       io.openshift.expose-services="80:http" \
       io.openshift.tags="monitoring" \
-      io.k8s.display-name="OpenTelemetry Target allocator" \
-      maintainer="Jaeger Team <jaeger-prod@redhat.com>" \
-      version="0.0.0"
-# TODO set the version
+      io.k8s.display-name="OpenTelemetry Target allocator"

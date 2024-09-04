@@ -53,7 +53,4 @@ LABEL com.redhat.component="opentelemetry-operator-container" \
       description="Operator for the OpenTelemetry collector" \
       io.openshift.expose-services="" \
       io.openshift.tags="tracing" \
-      io.k8s.display-name="OpenTelemetry Operator" \
-      maintainer="Jaeger Team <jaeger-prod@redhat.com>" \
-      version="0.0.0"
-# TODO set the version
+      io.k8s.display-name="OpenTelemetry Operator"
