@@ -1,21 +1,27 @@
 FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_8_golang_1.22 as builder
 
 WORKDIR /opt/app-root/src
-COPY opentelemetry-operator .
 USER root
+
+COPY opentelemetry-operator .
+# this directory is checked by ecosystem-cert-preflight-checks task in Konflux
+COPY opentelemetry-operator/LICENSE /licenses/
 
 RUN  CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -C ./cmd/otel-allocator -mod=mod -tags strictfipsruntime -o ./opentelemetry-target-allocator -trimpath -ldflags "-s -w"
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal
+WORKDIR /
 
 RUN microdnf update -y && rm -rf /var/cache/yum && \
     microdnf install openssl -y && \
     microdnf clean all
 
+RUN mkdir /licenses
+COPY opentelemetry-operator/LICENSE /licenses/.
+COPY --from=builder /opt/app-root/src/cmd/otel-allocator/opentelemetry-target-allocator /usr/bin/opentelemetry-target-allocator
+
 ARG USER_UID=1001
 USER ${USER_UID}
-
-COPY --from=builder /opt/app-root/src/cmd/otel-allocator/opentelemetry-operator /usr/bin/opentelemetry-target-allocator
 ENTRYPOINT ["/usr/bin/opentelemetry-target-allocator"]
 
 LABEL com.redhat.component="opentelemetry-target-allocator-container" \

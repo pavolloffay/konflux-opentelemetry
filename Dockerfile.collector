@@ -1,13 +1,18 @@
 FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_8_golang_1.22 as builder
 
 WORKDIR /opt/app-root/src
+USER root
+
 COPY redhat-opentelemetry-collector .
+# this directory is checked by ecosystem-cert-preflight-checks task in Konflux
+COPY redhat-opentelemetry-collector/LICENSE /licenses/
 
 RUN make ocb
 RUN ./bin/ocb --skip-compilation=true --config manifest.yaml 2>&1 | tee _build/build.log
 RUN CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -C ./_build -mod=mod -tags strictfipsruntime -o opentelemetry-collector -trimpath -ldflags "-s -w"
 
 FROM registry.access.redhat.com/ubi8/ubi-minimal
+WORKDIR /
 
 # Install the systemd package which provides journalctl required by journald receiver and add user to systemd-journal group.
 # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/journaldreceiver
@@ -15,16 +20,16 @@ RUN microdnf update -y && rm -rf /var/cache/yum && \
     microdnf install openssl systemd -y && \
     microdnf clean all
 
-ARG USER_UID=1001
-RUN useradd -u ${USER_UID} otelcol && usermod -a -G systemd-journal otelcol
-USER ${USER_UID}
-
+RUN mkdir /licenses
+COPY opentelemetry-operator/LICENSE /licenses/.
 COPY --from=builder /opt/app-root/src/_build/opentelemetry-collector /usr/bin/opentelemetry-collector
 COPY redhat-opentelemetry-collector/configs/otelcol.yaml /etc/otelcol/config.yaml
 
+ARG USER_UID=1001
+RUN useradd -u ${USER_UID} otelcol && usermod -a -G systemd-journal otelcol
+USER ${USER_UID}
 ENTRYPOINT ["/usr/bin/opentelemetry-operator"]
 CMD ["--config", "/etc/otelcol/config.yaml"]
-EXPOSE 4317 4318 9411
 
 LABEL com.redhat.component="opentelemetry-collector-container" \
       name="rhosdt/opentelemetry-collector-rhel8" \
