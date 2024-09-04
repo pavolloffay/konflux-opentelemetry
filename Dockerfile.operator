@@ -17,7 +17,7 @@ RUN  export VERSION_PKG="github.com/open-telemetry/opentelemetry-operator/intern
      export AUTO_INSTRUMENTATION_GO_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-go | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_GO_VERSION && \
      export AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-apache-httpd | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION && \
      export AUTO_INSTRUMENTATION_NGINX_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-nginx | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_NGINX_VERSION && \
-     CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -mod=mod -tags strictfipsruntime -o "opentelemetry-operator"  -ldflags "-X ${VERSION_PKG}.version=${GIT_LATEST_TAG_AND_SHA} -X ${VERSION_PKG}.buildDate=${BUILD_DATE} \
+     CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -mod=mod -tags strictfipsruntime -o ./opentelemetry-operator  -ldflags "-X ${VERSION_PKG}.version=${GIT_LATEST_TAG_AND_SHA} -X ${VERSION_PKG}.buildDate=${BUILD_DATE} \
               -X ${VERSION_PKG}.otelCol=${OTELCOL_VERSION} \
               -X ${VERSION_PKG}.targetAllocator=${TARGETALLOCATOR_VERSION} \
               -X ${VERSION_PKG}.operatorOpAMPBridge=${OPERATOR_OPAMP_BRIDGE_VERSION} \
@@ -29,19 +29,17 @@ RUN  export VERSION_PKG="github.com/open-telemetry/opentelemetry-operator/intern
               -X ${VERSION_PKG}.autoInstrumentationApacheHttpd=${AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION} \
               -X ${VERSION_PKG}.autoInstrumentationNginx=${AUTO_INSTRUMENTATION_NGINX_VERSION}"
 
-FROM registry.access.redhat.com/ubi9/ubi-minimal
+FROM registry.access.redhat.com/ubi8/ubi-minimal
 
-# Install the systemd package which provides journalctl required by journald receiver and add user to systemd-journal group.
-# https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/journaldreceiver
-RUN microdnf -y install systemd
+RUN microdnf update -y && rm -rf /var/cache/yum && \
+    microdnf install openssl -y && \
+    microdnf clean all
 
-ARG USER_UID=10001
-RUN useradd -u ${USER_UID} otelcol && usermod -a -G systemd-journal otelcol
+ARG USER_UID=1001
 USER ${USER_UID}
 
 COPY --from=builder /opt/app-root/src/opentelemetry-operator /usr/bin/opentelemetry-operator
 ENTRYPOINT ["/usr/bin/opentelemetry-operator"]
-
 
 LABEL com.redhat.component="opentelemetry-operator-container" \
       name="rhosdt/opentelemetry-rhel8-operator" \

@@ -1,27 +1,40 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal as builder
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_8_golang_1.22 as builder
 
-RUN microdnf -y install which go-toolset make
 WORKDIR /opt/app-root/src
 COPY redhat-opentelemetry-collector .
-USER root
-RUN make build
-#COPY otelcol /otelcol
-## Note that this shouldn't be necessary, but in some cases the file seems to be
-## copied with the execute bit lost (see #1317)
-RUN chmod 755 /opt/app-root/src/_build/otelcol
 
-FROM registry.access.redhat.com/ubi9/ubi-minimal
+RUN make ocb
+RUN ./bin/ocb --skip-compilation=true --config manifest.yaml 2>&1 | tee _build/build.log
+RUN ls ./_build
+RUN CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -C ./_build -mod=mod -tags strictfipsruntime -o opentelemetry-collector -ldflags "-s -w" -trimpath
+
+FROM registry.access.redhat.com/ubi8/ubi-minimal
 
 # Install the systemd package which provides journalctl required by journald receiver and add user to systemd-journal group.
 # https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/journaldreceiver
-RUN microdnf -y install systemd
-ARG USER_UID=10001
+RUN microdnf update -y && rm -rf /var/cache/yum && \
+    microdnf install openssl systemd -y && \
+    microdnf clean all
+
+ARG USER_UID=1001
 RUN useradd -u ${USER_UID} otelcol && usermod -a -G systemd-journal otelcol
 
 USER ${USER_UID}
 
-COPY --from=builder /opt/app-root/src/_build/otelcol /
+COPY --from=builder /opt/app-root/src/_build/opentelemetry-collector /usr/bin/opentelemetry-collector
 COPY redhat-opentelemetry-collector/configs/otelcol.yaml /etc/otelcol/config.yaml
-ENTRYPOINT ["/otelcol"]
+
+ENTRYPOINT ["/usr/bin/opentelemetry-operator"]
 CMD ["--config", "/etc/otelcol/config.yaml"]
-EXPOSE 4317 55678 55679
+EXPOSE 4317 4318 9411
+
+LABEL com.redhat.component="opentelemetry-collector-container" \
+      name="rhosdt/opentelemetry-collector-rhel8" \
+      summary="OpenTelemetry Collector" \
+      description="Collector for the distributed tracing system" \
+      io.openshift.expose-services="4317:otlp,9411:zipkin" \
+      io.openshift.tags="tracing" \
+      io.k8s.display-name="OpenTelemetry Collector" \
+      maintainer="Jaeger Team <jaeger-prod@redhat.com>" \
+      version="0.0.0"
+# TODO set the version
