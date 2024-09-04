@@ -1,0 +1,55 @@
+FROM brew.registry.redhat.io/rh-osbs/openshift-golang-builder:rhel_8_golang_1.22 as builder
+
+WORKDIR /opt/app-root/src
+COPY opentelemetry-operator .
+USER root
+
+RUN  export VERSION_PKG="github.com/open-telemetry/opentelemetry-operator/internal/version" && \
+     export BUILD_DATE=`date -u +'%Y-%m-%dT%H:%M:%SZ'` && echo $BUILD_DATE && \
+     export GIT_LATEST_TAG_AND_SHA=`git describe --tags | sed 's/^v//'` && echo $GIT_LATEST_TAG_AND_SHA && \
+     export OTELCOL_VERSION=`grep -v '\#' versions.txt | grep opentelemetry-collector | awk -F= '{print $2}'` && echo $OTELCOL_VERSION && \
+     export TARGETALLOCATOR_VERSION=`grep -v '\#' versions.txt | grep targetallocator | awk -F= '{print $2}'` && echo $TARGETALLOCATOR_VERSION && \
+     export OPERATOR_OPAMP_BRIDGE_VERSION=`grep -v '\#' versions.txt | grep operator-opamp-bridge | awk -F= '{print $2}'` && echo $OPERATOR_OPAMP_BRIDGE_VERSION && \
+     export AUTO_INSTRUMENTATION_JAVA_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-java | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_JAVA_VERSION && \
+     export AUTO_INSTRUMENTATION_NODEJS_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-nodejs | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_NODEJS_VERSION && \
+     export AUTO_INSTRUMENTATION_PYTHON_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-python | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_PYTHON_VERSION && \
+     export AUTO_INSTRUMENTATION_DOTNET_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-dotnet | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_DOTNET_VERSION && \
+     export AUTO_INSTRUMENTATION_GO_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-go | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_GO_VERSION && \
+     export AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-apache-httpd | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION && \
+     export AUTO_INSTRUMENTATION_NGINX_VERSION=`grep -v '\#' versions.txt | grep autoinstrumentation-nginx | awk -F= '{print $2}'`  && echo $AUTO_INSTRUMENTATION_NGINX_VERSION && \
+     CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -mod=mod -tags strictfipsruntime -o "opentelemetry-operator"  -ldflags "-X ${VERSION_PKG}.version=${GIT_LATEST_TAG_AND_SHA} -X ${VERSION_PKG}.buildDate=${BUILD_DATE} \
+              -X ${VERSION_PKG}.otelCol=${OTELCOL_VERSION} \
+              -X ${VERSION_PKG}.targetAllocator=${TARGETALLOCATOR_VERSION} \
+              -X ${VERSION_PKG}.operatorOpAMPBridge=${OPERATOR_OPAMP_BRIDGE_VERSION} \
+              -X ${VERSION_PKG}.autoInstrumentationJava=${AUTO_INSTRUMENTATION_JAVA_VERSION} \
+              -X ${VERSION_PKG}.autoInstrumentationNodeJS=${AUTO_INSTRUMENTATION_NODEJS_VERSION} \
+              -X ${VERSION_PKG}.autoInstrumentationPython=${AUTO_INSTRUMENTATION_PYTHON_VERSION} \
+              -X ${VERSION_PKG}.autoInstrumentationDotNet=${AUTO_INSTRUMENTATION_DOTNET_VERSION} \
+              -X ${VERSION_PKG}.autoInstrumentationGo=${AUTO_INSTRUMENTATION_GO_VERSION} \
+              -X ${VERSION_PKG}.autoInstrumentationApacheHttpd=${AUTO_INSTRUMENTATION_APACHE_HTTPD_VERSION} \
+              -X ${VERSION_PKG}.autoInstrumentationNginx=${AUTO_INSTRUMENTATION_NGINX_VERSION}"
+
+FROM registry.access.redhat.com/ubi9/ubi-minimal
+
+# Install the systemd package which provides journalctl required by journald receiver and add user to systemd-journal group.
+# https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/receiver/journaldreceiver
+RUN microdnf -y install systemd
+
+ARG USER_UID=10001
+RUN useradd -u ${USER_UID} otelcol && usermod -a -G systemd-journal otelcol
+USER ${USER_UID}
+
+COPY --from=builder /opt/app-root/src/opentelemetry-operator /usr/bin/opentelemetry-operator
+ENTRYPOINT ["/usr/bin/opentelemetry-operator"]
+
+
+LABEL com.redhat.component="opentelemetry-operator-container" \
+      name="rhosdt/opentelemetry-rhel8-operator" \
+      summary="OpenTelemetry Operator" \
+      description="Operator for the OpenTelemetry collector" \
+      io.openshift.expose-services="" \
+      io.openshift.tags="tracing" \
+      io.k8s.display-name="OpenTelemetry Operator" \
+      maintainer="Jaeger Team <jaeger-prod@redhat.com>" \
+      version="0.0.0"
+# TODO set the version
