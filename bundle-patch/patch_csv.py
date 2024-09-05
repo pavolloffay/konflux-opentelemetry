@@ -62,12 +62,10 @@ with open('./patch_csv.yaml') as pf:
     upstream_csv['spec']['maintainers'] = patch['spec']['maintainers']
     upstream_csv['spec']['provider'] = patch['spec']['provider']
 
-    # TODO handle spec.replaces
-    # TODO handle annotation olm.skipRange
-    # Notes: version is set in upstream version: 0.107.0
-    # Notes: name is set in upstream opentelemetry-operator.v0.107.0
-    # Notes: replaces previous version is missing e.g. replaces: gatekeeper-operator.v3.14.1
-    # Notes: olm.skipRange uses current version
+    if patch['metadata'].get('name'):
+        upstream_csv['metadata']['name'] = patch['metadata']['name']
+    if patch['spec'].get('replaces'):
+        upstream_csv['spec']['replaces'] = patch['spec']['replaces']
 
     # volumes
     if not upstream_csv['spec']['install']['spec']['deployments'][0]['spec']['template']['spec'].get('volumes'):
