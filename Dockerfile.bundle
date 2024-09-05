@@ -10,7 +10,7 @@ COPY bundle-patch .
 COPY opentelemetry-operator/bundle/openshift/manifests /manifests/
 COPY opentelemetry-operator/bundle/openshift/metadata /metadata/
 
-RUN ./update_bundle.sh && cat /manifests/opentelemetry-operator.clusterserviceversion.yaml
+RUN ./update_bundle.sh && cat /manifests/opentelemetry-operator.clusterserviceversion.yaml /metadata/annotations.yaml
 
 FROM scratch
 
