@@ -6,5 +6,5 @@
 2. Build locally
 
 ```bash
- podman build -t docker.io/user/otel-operator:$(date +%s) -f Dockerfile.operator 
+podman build -t docker.io/user/otel-operator:$(date +%s) -f Dockerfile.operator 
 ```
