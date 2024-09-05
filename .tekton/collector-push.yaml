@@ -9,7 +9,7 @@ metadata:
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "main" &&
       (".tekton/collector-pull-request.yaml".pathChanged() ||
       ".tekton/collector-push.yaml".pathChanged() ||
-      "Containerfile.collector".pathChanged() ||
+      "Dockerfile.collector".pathChanged() ||
       "redhat-opentelemetry-collector".pathChanged())
   creationTimestamp: null
   labels:
