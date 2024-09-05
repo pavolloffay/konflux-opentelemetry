@@ -29,6 +29,7 @@ def get_container(containers_array, container_name):
 timestamp = int(os.getenv('EPOC_TIMESTAMP'))
 datetime_time = datetime.fromtimestamp(timestamp)
 upstream_csv = load_manifest(os.getenv('CSV_FILE'))
+
 # Add arch support labels
 upstream_csv['metadata']['labels'] = upstream_csv['metadata'].get('labels', {})
 if os.getenv('AMD64_BUILT'):
@@ -44,24 +45,29 @@ upstream_csv['metadata']['annotations']['createdAt'] = datetime_time.strftime('%
 upstream_csv['metadata']['annotations']['repository'] = 'https://github.com/pavolloffay/opentelemetry-operator'
 upstream_csv['metadata']['annotations']['containerImage'] = os.getenv('OTEL_OPERATOR_IMAGE_PULLSPEC', '')
 
+upstream_csv['spec']['relatedImages'] = [
+    {'name': 'operator', 'image': os.getenv('OTEL_OPERATOR_IMAGE_PULLSPEC')},
+    {'name': 'collector', 'image': os.getenv('OTEL_COLLECTOR_IMAGE_PULLSPEC')},
+    {'name': 'target-allocator', 'image': os.getenv('OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC')}]
+
 with open('./patch_csv.yaml') as pf:
     patch = yaml.load(pf)
 
     if patch['metadata'].get(['labels']) is not None:
         upstream_csv['metadata']['labels'].update(patch['metadata']['labels'])
     upstream_csv['metadata']['annotations'].update(patch['metadata']['extra_annotations'])
-    upstream_csv['metadata']['name'] = patch['metadata']['name']
     upstream_csv['spec']['description'] = patch['spec']['description']
     upstream_csv['spec']['displayName'] = patch['spec']['displayName']
     upstream_csv['spec']['icon'] = patch['spec']['icon']
     upstream_csv['spec']['maintainers'] = patch['spec']['maintainers']
     upstream_csv['spec']['provider'] = patch['spec']['provider']
 
-    # TODO handle name which has the version
-    # TODO handle spec.version
     # TODO handle spec.replaces
     # TODO handle annotation olm.skipRange
-    # TODO handle related images
+    # Notes: version is set in upstream version: 0.107.0
+    # Notes: name is set in upstream opentelemetry-operator.v0.107.0
+    # Notes: replaces previous version is missing e.g. replaces: gatekeeper-operator.v3.14.1
+    # Notes: olm.skipRange uses current version
 
     # volumes
     if not upstream_csv['spec']['install']['spec']['deployments'][0]['spec']['template']['spec'].get('volumes'):
@@ -74,6 +80,11 @@ with open('./patch_csv.yaml') as pf:
         if upstream_container is None:
             print("container preset in patch, but not in upstream CSV", container['name'])
             exit(2)
+        print("Patching ", container['name'])
+
+        # image
+        if container.get('image') is not None:
+            upstream_container['image'] = container.get('image')
 
         # args
         if container['extra_args'] is not None:

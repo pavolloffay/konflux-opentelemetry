@@ -13,7 +13,6 @@ metadata:
     features.operators.openshift.io/token-auth-aws: "false"
     features.operators.openshift.io/token-auth-azure: "false"
     features.operators.openshift.io/token-auth-gcp: "false"
-  name: "opentelemetry-operator.v{opentelemetry-operator-tag}"
 spec:
   description: |-
     Red Hat build of OpenTelemetry is a collection of tools, APIs, and SDKs. You use it to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) for analysis in order to understand your software's performance and behavior.
@@ -64,9 +63,9 @@ spec:
                       - '--enable-cr-metrics=true'
                     extra_env:
                       - name: RELATED_IMAGE_COLLECTOR
-                        value: {opentelemetry-collector-container}
+                        value: opentelemetry-collector-container-pullspec
                       - name: RELATED_IMAGE_TARGET_ALLOCATOR
-                        value: {opentelemetry-target-allocator-container}
+                        value: opentelemetry-target-allocator-container-pullspec
                       - name: RELATED_IMAGE_OSE_KUBE_RBAC_PROXY
                         value: registry.redhat.io/openshift4/ose-kube-rbac-proxy:latest
                   - name: kube-rbac-proxy
