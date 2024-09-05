@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export OTEL_COLLECTOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/collector@sha256:e4d235deca01261b6b6f259655a64160abffefc524d71ebac4678171a9b44138"
-export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-target-allocator@sha256:f78aeaf39d569020ce1ce6cce49e39fb1a6c3acf674848b24bfd68875c080d18"
+export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-target-allocator@sha256:c6eae4867ed1aeef441971c83495e34d9140b4d2b7c01ba22429af8465f4498f"
 export OTEL_OPERATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/operator@sha256:d85433fa0a2ac7689772ddcd2680cae73c89b317346ee4b3124f8725d9820ba0"
 
 export CSV_FILE=/manifests/opentelemetry-operator.clusterserviceversion.yaml
