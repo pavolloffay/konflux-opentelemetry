@@ -12,8 +12,8 @@ metadata:
     features.operators.openshift.io/token-auth-aws: "false"
     features.operators.openshift.io/token-auth-azure: "false"
     features.operators.openshift.io/token-auth-gcp: "false"
-    olm.skipRange: '>=0.33.0 <0.108.0'
-  name: opentelemetry-operator.v0.108.0
+    olm.skipRange: '>=0.33.0 <0.107.0-1'
+  name: opentelemetry-operator.v0.107.0-1
 spec:
   replaces: opentelemetry-operator.v0.107.0-4
   description: |-
