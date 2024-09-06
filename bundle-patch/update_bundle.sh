@@ -4,7 +4,7 @@ set -e
 
 export OTEL_COLLECTOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/collector@sha256:5987f9dbd1e4a20ed261c1878dfb461fd1a486d641ad8327c69e80cd817fa264"
 # Separate due to merge conflicts
-export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-target-allocator@sha256:93ad8c34796bb669610fd1ccadd537c5f138f3bef558069537d34a110ddfb138"
+export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-target-allocator@sha256:db814f6e71bb646c9e41bcdbbda9b85ccb34f63624d46d348580c672b259e710"
 # Separate due to merge conflicts
 export OTEL_OPERATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/operator@sha256:99e1d1947903abc667278bc1f2b4323a7d300bb284dfb6af8d060ffb2c5a2d03"
 
