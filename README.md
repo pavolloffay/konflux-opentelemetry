@@ -1,9 +1,8 @@
 # konflux-opentelemetry
 
-## Build locally
+This repository contains Konflux configuration to build Red Hat build of OpenTelemetry.
 
-1. Authenticate to brew docker registry
-2. Build locally
+## Build locally
 
 ```bash
 docker login brew.registry.redhat.io -u
