@@ -61,6 +61,7 @@ with open('./patch_csv.yaml') as pf:
     upstream_csv['spec']['icon'] = patch['spec']['icon']
     upstream_csv['spec']['maintainers'] = patch['spec']['maintainers']
     upstream_csv['spec']['provider'] = patch['spec']['provider']
+    upstream_csv['spec']['version'] = patch['spec']['version']
 
     if patch['metadata'].get('name'):
         upstream_csv['metadata']['name'] = patch['metadata']['name']
