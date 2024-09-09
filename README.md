@@ -35,3 +35,12 @@ Once the PR is merged and bundle is built. Open another PR `Release - update cat
 ## Test locally
 
 Images can be found at https://quay.io/organization/redhat-user-workloads
+
+## Inspect bundle image
+
+```bash
+mkdir /tmp/bundle
+docker image save -o /tmp/bundle/image.tar quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:80440220f429a16cb76ea618e85f79b75e7cd80e00ca618a86e322155d200a33
+tar xvf /tmp/bundle/image.tar -C /tmp/bundle
+tar xvf /tmp/bundle/c6f6e1b5441a6acfc03bb40f4b2d47b98dcfca1761e77e47fba004653eb596d7/layer.tar -C /tmp/bundle/c6f6e1b5441a6acfc03bb40f4b2d47b98dcfca1761e77e47fba004653eb596d7
+```

@@ -14,7 +14,7 @@
             "entries": [
                 {
                     "name": "opentelemetry-operator.v0.107.0-1",
-                    "replaces": "opentelemetry-operator.v0.107.0-4 ",
+                    "replaces": "opentelemetry-operator.v0.107.0-4",
                     "skipRange": "\u003e=0.33.0 \u003c0.107.0-100"
                 },
                 {
