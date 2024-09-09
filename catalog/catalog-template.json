@@ -13,7 +13,7 @@
         {
             "entries": [
                 {
-                    "name": "opentelemetry-operator.v0.107.0-1",
+                    "name": "opentelemetry-operator.v0.107.0-100",
                     "replaces": "opentelemetry-operator.v0.107.0-4",
                     "skipRange": "\u003e=0.33.0 \u003c0.107.0-100"
                 },
@@ -85,7 +85,7 @@
         },
         {
             "schema": "olm.bundle",
-            "image": "quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:5fa4db2d5c625db88bc5c8635f7ba66d48b171b8c6577b7a2f31ea453563b4c0"
+            "image": "quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:193358e912cd6a1d06eacf27363d85f2082c21596084110f026f43682ca3cecf"
         },
         {
             "schema": "olm.bundle",
