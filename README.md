@@ -57,15 +57,16 @@ metadata:
    namespace: openshift-marketplace
 spec:
    sourceType: grpc
-   image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-fbc-v4-15@sha256:d0d6bcd996a1a3ffcd67e34241d1516b5af4172b4c7517fcf4eebbc7468aa469
+   image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-fbc-v4-15@sha256:337009c69204eed22bd90acf5af45f3db678bd65531c8847c59e9532f8427d29
    displayName: Konflux Catalog OTEL
    publisher: grpc
 EOF
 
+kubectl get pods -w -n openshift-marketplace
 kubectl delete CatalogSource konflux-catalog-otel -n openshift-marketplace
 ```
 
-Now `kubectl get pods -w -n openshift-marketplace` should show a new pod with name `konflux-catalog-otel` and `Konflux catalog OTEL` menu item should show in Source in OCP console under Operators->OperatorHub.
+`Konflux catalog OTEL` menu should appear in the OCP console under Operators->OperatorHub.
 
 ### Inspect bundle image
 
