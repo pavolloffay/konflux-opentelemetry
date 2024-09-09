@@ -36,7 +36,39 @@ Once the PR is merged and bundle is built. Open another PR `Release - update cat
 
 Images can be found at https://quay.io/organization/redhat-user-workloads
 
-## Inspect bundle image
+### Deploy bundle
+
+```bash
+operator-sdk olm install 
+operator-sdk run bundle quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:80440220f429a16cb76ea618e85f79b75e7cd80e00ca618a86e322155d200a33
+operator-sdk cleanup opentelemetry-product
+```
+
+### Deploy catalog
+
+Get catalog for specific version from [Konflux](https://console.redhat.com/application-pipeline/workspaces/rhosdt/applications/otel-fbc-v4-15/components/otel-fbc-v4-15)
+
+```yaml
+kubectl apply -f - <<EOF
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+   name: konflux-catalog-otel
+   namespace: openshift-marketplace
+spec:
+   sourceType: grpc
+   image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-fbc-v4-15@sha256:f6993a62818123f2452f13460e1d36f0fc1b27b6d5ed7f37fc2845b8f0300271
+   displayName: Konflux Catalog OTEL
+   publisher: grpc
+EOF
+```
+
+TODO The f6993a62818123f2452f13460e1d36f0fc1b27b6d5ed7f37fc2845b8f0300271 does not show 0.107.0-100
+
+Now `kubectl get pods -w -n openshift-marketplace` should show a new pod with name `konflux-catalog-otel` and `Konflux catalog OTEL` menu item should show in Source in OCP console under Operators->OperatorHub.
+To delete the IIB catalog run `kubectl delete CatalogSource konflux-catalog-otel -n openshift-marketplace`.
+
+### Inspect bundle image
 
 ```bash
 mkdir /tmp/bundle
