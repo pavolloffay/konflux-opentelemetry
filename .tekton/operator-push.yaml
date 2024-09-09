@@ -6,8 +6,13 @@ metadata:
     build.appstudio.redhat.com/commit_sha: '{{revision}}'
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
-      == "main"
+    build.appstudio.openshift.io/build-nudge-files: "bundle-patch/update_bundle.sh"
+    pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch == "main" &&
+      (".tekton/multi-arch-build-pipeline.yaml".pathChanged() ||
+      ".tekton/operator-pull-request.yaml".pathChanged() ||
+      ".tekton/operator-push.yaml".pathChanged() ||
+      "Dockerfile.operator".pathChanged() ||
+      "opentelemetry-operator".pathChanged())
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: otel
