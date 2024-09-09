@@ -24,6 +24,10 @@ export S390X_BUILT=$(skopeo inspect --raw docker://${OTEL_OPERATOR_IMAGE_PULLSPE
 
 export EPOC_TIMESTAMP=$(date +%s)
 
+# https://issues.redhat.com/browse/TRACING-4288
+patch manifests/opentelemetry-operator-controller-manager-metrics-service_v1_service.yaml opentelemetry-operator-controller-manager-metrics-service_v1_service.patch
+cat manifests/opentelemetry-operator-controller-manager-metrics-service_v1_service.yaml
+
 # time for some direct modifications to the csv
 python3 patch_csv.py
 python3 patch_annotations.py
