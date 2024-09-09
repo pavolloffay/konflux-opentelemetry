@@ -40,7 +40,7 @@ Images can be found at https://quay.io/organization/redhat-user-workloads
 
 ```bash
 operator-sdk olm install 
-operator-sdk run bundle quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:193358e912cd6a1d06eacf27363d85f2082c21596084110f026f43682ca3cecf
+operator-sdk run bundle quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:a09e1fa7c42b3f89b8a74e83d9d8c5b501ef9cd356612d6e146646df1f3d5800
 operator-sdk cleanup opentelemetry-product
 ```
 
