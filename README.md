@@ -57,15 +57,13 @@ metadata:
    namespace: openshift-marketplace
 spec:
    sourceType: grpc
-   image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-fbc-v4-15@sha256:f6993a62818123f2452f13460e1d36f0fc1b27b6d5ed7f37fc2845b8f0300271
+   image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-fbc-v4-15@sha256:d0d6bcd996a1a3ffcd67e34241d1516b5af4172b4c7517fcf4eebbc7468aa469
    displayName: Konflux Catalog OTEL
    publisher: grpc
 EOF
 
 kubectl delete CatalogSource konflux-catalog-otel -n openshift-marketplace
 ```
-
-TODO The f6993a62818123f2452f13460e1d36f0fc1b27b6d5ed7f37fc2845b8f0300271 does not show 0.107.0-100
 
 Now `kubectl get pods -w -n openshift-marketplace` should show a new pod with name `konflux-catalog-otel` and `Konflux catalog OTEL` menu item should show in Source in OCP console under Operators->OperatorHub.
 
