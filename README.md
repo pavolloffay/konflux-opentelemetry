@@ -40,7 +40,7 @@ Images can be found at https://quay.io/organization/redhat-user-workloads
 
 ```bash
 operator-sdk olm install 
-operator-sdk run bundle quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:80440220f429a16cb76ea618e85f79b75e7cd80e00ca618a86e322155d200a33
+operator-sdk run bundle quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:193358e912cd6a1d06eacf27363d85f2082c21596084110f026f43682ca3cecf
 operator-sdk cleanup opentelemetry-product
 ```
 
@@ -73,7 +73,7 @@ Now `kubectl get pods -w -n openshift-marketplace` should show a new pod with na
 
 ```bash
 mkdir /tmp/bundle
-docker image save -o /tmp/bundle/image.tar quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:80440220f429a16cb76ea618e85f79b75e7cd80e00ca618a86e322155d200a33
+docker image save -o /tmp/bundle/image.tar quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:193358e912cd6a1d06eacf27363d85f2082c21596084110f026f43682ca3cecf
 tar xvf /tmp/bundle/image.tar -C /tmp/bundle
 tar xvf /tmp/bundle/c6f6e1b5441a6acfc03bb40f4b2d47b98dcfca1761e77e47fba004653eb596d7/layer.tar -C /tmp/bundle/c6f6e1b5441a6acfc03bb40f4b2d47b98dcfca1761e77e47fba004653eb596d7
 ```
