@@ -22,7 +22,8 @@ Open PR `Release - update bundle version` and update [patch_csv.yaml](./bundle-p
 Once the PR is merged and bundle is built. Open another PR `Release - update catalog` with:
  * Updated [catalog template](./catalog/catalog-template.json) with the new bundle (get the bundle pullspec from [Konflux](https://console.redhat.com/application-pipeline/workspaces/rhosdt/applications/otel/components/otel-bundle)):
     ```bash
-    opm alpha render-template basic catalog/catalog-template.json > catalog/opentelemetry-product/catalog.json
+    opm alpha render-template basic catalog/catalog-template.json > catalog/opentelemetry-product/catalog.json && \
+    opm validate catalog/opentelemetry-product/ 
 
     # This does not generate valid catalog, e.g. it is smaller and missing relatedImages
     docker run --rm -it -v $(pwd)/catalog:/tmp:Z  --entrypoint /bin/bash registry.redhat.io/openshift4/ose-operator-registry-rhel9:v4.16
