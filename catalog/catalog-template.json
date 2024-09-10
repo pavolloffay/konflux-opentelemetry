@@ -85,7 +85,7 @@
         },
         {
             "schema": "olm.bundle",
-            "image": "quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:18d2dda008e5bba04a6c46873f54b1af3b6e27fc4ea6a225ba5e1ae1c855fa47"
+            "image": "quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-bundle@sha256:d99c245ba63b6b12b032ed60c0af7fd98bb63d52016d51742d7e59816f9d2432"
         },
         {
             "schema": "olm.bundle",
