@@ -187,3 +187,11 @@ skopeo inspect --raw docker://quay.io/redhat-user-workloads/rhosdt-tenant/otel/o
   }
 }
 ```
+
+### Extract file based catalog from OpenShift index
+
+```bash
+podman cp $(podman create --name tc registry.redhat.io/redhat/redhat-operator-index:v4.16):/configs/opentelemetry-product opentelemetry-product-4.16  && podman rm tc
+opm migrate opentelemetry-product-4.16 opentelemetry-product-4.16-migrated
+opm alpha convert-template basic ./opentelemetry-product-4.16-migrated/opentelemetry-product/catalog.json > opentelemetry-product-4.16-migrated/opentelemetry-product/catalog-template.json
+```
