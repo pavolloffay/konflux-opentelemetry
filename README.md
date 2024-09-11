@@ -8,6 +8,8 @@ This repository contains Konflux configuration to build Red Hat build of OpenTel
 docker login brew.registry.redhat.io -u
 docker login registry.redhat.io -u
 
+git submodule update --init --recursive
+
 podman build -t docker.io/user/otel-operator:$(date +%s) -f Dockerfile.operator 
 ```
 
