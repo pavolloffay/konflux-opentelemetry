@@ -3,11 +3,11 @@
 set -e
 
 # The pullspec should be image index, check if all architectures are there with: skopeo inspect --raw docker://$IMG | jq
-export OTEL_COLLECTOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-collector@sha256:bf40ee8863f69a8939a91af563359760932f361b8954d7a66c6254b18a08216a"
+export OTEL_COLLECTOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-collector@sha256:826ddf63cc17b047e583507f1a8b99fb11b8df330dda921eadeaafa3c419b923"
 # Separate due to merge conflicts
-export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-target-allocator@sha256:9d21704e8468858afcbaea804f662c6360f625d38499d4baa14b64ddbc3f5894"
+export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-target-allocator@sha256:dcd51f989f17f955573d9ef398d873334cb156c857327bfc193c377acdf105fc"
 # Separate due to merge conflicts
-export OTEL_OPERATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/otel-operator@sha256:c7abd515a2ec4216c6f1ac3ee63ab9450ada9e0cd6a076b88d23b755263a0113"
+export OTEL_OPERATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-operator@sha256:98c8c6d4ec09c4d06705a595a2d09368d180757d97d3bf1aedc486496c726c4e"
 
 
 export CSV_FILE=/manifests/opentelemetry-operator.clusterserviceversion.yaml
