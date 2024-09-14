@@ -3,7 +3,7 @@
 set -e
 
 # The pullspec should be image index, check if all architectures are there with: skopeo inspect --raw docker://$IMG | jq
-export OTEL_COLLECTOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-collector@sha256:21090f03f29c9c1f322eaa1f309fcc514eb96c656d8a457220ca5a1f91b457e8"
+export OTEL_COLLECTOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-collector@sha256:5d49a1beccdec9f98db4ffcaa4d05717eb2a3bf147901d28ecaa3700b6066f00"
 # Separate due to merge conflicts
 export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-target-allocator@sha256:d82b2dc76f9086ebfc9a4e6617da33d3e6b53c36820270c9ada96797f98771b5"
 # Separate due to merge conflicts
