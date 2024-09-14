@@ -36,7 +36,7 @@ LABEL io.k8s.description="Bundle for OpenTelemetry operator"
 # TODO check if this is correct
 LABEL com.redhat.component="rhosdt"
 LABEL url="https://github.com/open-telemetry/opentelemetry-operator"
-LABEL vendor="Red Hat"
+LABEL vendor="Red Hat, Inc."
 LABEL summary="OpenTelemetry operator bundle"
 LABEL maintainer="support@redhat.com"
 
