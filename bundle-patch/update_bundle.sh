@@ -7,7 +7,7 @@ export OTEL_COLLECTOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenan
 # Separate due to merge conflicts
 export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-target-allocator@sha256:d82b2dc76f9086ebfc9a4e6617da33d3e6b53c36820270c9ada96797f98771b5"
 # Separate due to merge conflicts
-export OTEL_OPERATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-operator@sha256:5c45ff820d8bcbe60ffd9534bb8a1857deb4f4507beca0bba8bf980f447291b6"
+export OTEL_OPERATOR_IMAGE_PULLSPEC="quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-operator@sha256:1739d1d4c4cfcf4d50eb332751be27fec555c75ac2991c63f47e1e9e26639baa"
 
 
 export CSV_FILE=/manifests/opentelemetry-operator.clusterserviceversion.yaml
