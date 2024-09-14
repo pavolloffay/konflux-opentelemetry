@@ -27,6 +27,19 @@ LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.29.0
 LABEL operators.operatorframework.io.metrics.mediatype.v1=metrics+v1
 LABEL operators.operatorframework.io.metrics.project_layout=go.kubebuilder.io/v3
 
+LABEL release="0.107.0-100"
+LABEL version="0.107.0-100"
+LABEL name="rhosdt/opentelemetry-bundle"
+LABEL distribution-scope="public"
+LABEL description="Bundle for OpenTelemetry operator"
+LABEL io.k8s.description="Bundle for OpenTelemetry operator"
+# TODO check if this is correct
+LABEL com.redhat.component="rhosdt"
+LABEL url="https://github.com/open-telemetry/opentelemetry-operator"
+LABEL vendor="Red Hat"
+LABEL summary="OpenTelemetry operator bundle"
+LABEL maintainer="support@redhat.com"
+
 # Labels for testing.
 LABEL operators.operatorframework.io.test.mediatype.v1=scorecard+v1
 LABEL operators.operatorframework.io.test.config.v1=tests/scorecard/

@@ -51,6 +51,7 @@ LABEL com.redhat.component="opentelemetry-operator-container" \
       name="rhosdt/opentelemetry-rhel8-operator" \
       summary="OpenTelemetry Operator" \
       description="Operator for the OpenTelemetry collector" \
+      io.k8s.description="Collector for the distributed tracing system" \
       io.openshift.expose-services="" \
       io.openshift.tags="tracing" \
       io.k8s.display-name="OpenTelemetry Operator"
