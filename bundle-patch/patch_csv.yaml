@@ -73,9 +73,9 @@ spec:
                       - name: RELATED_IMAGE_TARGET_ALLOCATOR
                         value: opentelemetry-target-allocator-container-pullspec
                       - name: RELATED_IMAGE_OSE_KUBE_RBAC_PROXY
-                        value: registry.redhat.io/openshift4/ose-kube-rbac-proxy:latest
+                        value: ose-kube-rbac-proxy-container-pullspec
                   - name: kube-rbac-proxy
-                    image: 'registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:8204d45506297578c8e41bcc61135da0c7ca244ccbd1b39070684dfeb4c2f26c'
+                    image: ose-kube-rbac-proxy-container-pullspec
                     extra_args:
                       - '--tls-cert-file=/var/run/tls/server/tls.crt'
                       - '--tls-private-key-file=/var/run/tls/server/tls.key'

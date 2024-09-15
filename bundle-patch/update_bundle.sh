@@ -8,7 +8,9 @@ export OTEL_COLLECTOR_IMAGE_PULLSPEC="registry.stage.redhat.io/rhosdt/openteleme
 export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="registry.stage.redhat.io/rhosdt/opentelemetry-target-allocator@sha256:d82b2dc76f9086ebfc9a4e6617da33d3e6b53c36820270c9ada96797f98771b5"
 # Separate due to merge conflicts
 export OTEL_OPERATOR_IMAGE_PULLSPEC="registry.stage.redhat.io/rhosdt/opentelemetry-operator@sha256:5c45ff820d8bcbe60ffd9534bb8a1857deb4f4507beca0bba8bf980f447291b6"
-
+# Separate due to merge conflicts
+# TODO, we used to set the proxy image per OCP version
+export OSE_KUBER_RBAC_PROXY_PULLSPEC="registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:8204d45506297578c8e41bcc61135da0c7ca244ccbd1b39070684dfeb4c2f26c"
 
 export CSV_FILE=/manifests/opentelemetry-operator.clusterserviceversion.yaml
 
@@ -17,6 +19,7 @@ sed -i -e "s|ghcr.io/open-telemetry/opentelemetry-operator/opentelemetry-operato
 
 sed -i "s#opentelemetry-collector-container-pullspec#$OTEL_COLLECTOR_IMAGE_PULLSPEC#g" patch_csv.yaml
 sed -i "s#opentelemetry-target-allocator-container-pullspec#$OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC#g" patch_csv.yaml
+sed -i "s#ose-kube-rbac-proxy-container-pullspec#$OSE_KUBER_RBAC_PROXY_PULLSPEC#g" patch_csv.yaml
 
 export AMD64_BUILT=$(skopeo inspect --raw docker://${OTEL_OPERATOR_IMAGE_PULLSPEC} | jq -e '.manifests[] | select(.platform.architecture=="amd64")')
 export ARM64_BUILT=$(skopeo inspect --raw docker://${OTEL_OPERATOR_IMAGE_PULLSPEC} | jq -e '.manifests[] | select(.platform.architecture=="arm64")')
