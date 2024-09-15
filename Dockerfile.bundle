@@ -29,7 +29,7 @@ LABEL operators.operatorframework.io.metrics.project_layout=go.kubebuilder.io/v3
 
 LABEL release="0.107.0-100"
 LABEL version="0.107.0-100"
-LABEL name="rhosdt/opentelemetry-bundle"
+LABEL name="rhosdt/opentelemetry-operator-bundle"
 LABEL distribution-scope="public"
 LABEL description="Bundle for OpenTelemetry operator"
 LABEL io.k8s.description="Bundle for OpenTelemetry operator"
