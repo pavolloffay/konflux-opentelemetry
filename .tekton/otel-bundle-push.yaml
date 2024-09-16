@@ -30,6 +30,8 @@ spec:
     value: quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-bundle:{{revision}}
   - name: dockerfile
     value: Dockerfile.bundle
+  - name: build-source-image
+    value: "true"
     # Do not use hermetic for now as we are going to generate our manifest at build time. We need to pull in content.
   - name: hermetic
     value: "false"

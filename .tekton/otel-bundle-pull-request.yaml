@@ -33,6 +33,8 @@ spec:
     value: 5d
   - name: dockerfile
     value: Dockerfile.bundle
+  - name: build-source-image
+    value: "true"
   - name: hermetic
     value: "false"
   pipelineRef:
