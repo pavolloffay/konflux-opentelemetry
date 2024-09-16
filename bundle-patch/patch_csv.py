@@ -60,7 +60,8 @@ upstream_csv['metadata']['annotations']['containerImage'] = os.getenv('OTEL_OPER
 upstream_csv['spec']['relatedImages'] = [
     {'name': 'operator', 'image': os.getenv('OTEL_OPERATOR_IMAGE_PULLSPEC')},
     {'name': 'collector', 'image': os.getenv('OTEL_COLLECTOR_IMAGE_PULLSPEC')},
-    {'name': 'target-allocator', 'image': os.getenv('OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC')}]
+    {'name': 'target-allocator', 'image': os.getenv('OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC')},
+    {'name': 'ose-rbac-proxy', 'image': os.getenv('OSE_KUBE_RBAC_PROXY_PULLSPEC')}]
 
 with open('./patch_csv.yaml') as pf:
     patch = yaml.load(pf)
