@@ -3,11 +3,11 @@
 set -e
 
 # The pullspec should be image index, check if all architectures are there with: skopeo inspect --raw docker://$IMG | jq
-export OTEL_COLLECTOR_IMAGE_PULLSPEC="registry.redhat.io/rhosdt/opentelemetry-collector-rhel8@sha256:21090f03f29c9c1f322eaa1f309fcc514eb96c656d8a457220ca5a1f91b457e8"
+export OTEL_COLLECTOR_IMAGE_PULLSPEC="registry.redhat.io/rhosdt/opentelemetry-collector-rhel8@sha256:3d1278914ebef3d8c373c515d7ac64234139ededb2e3526f185254ff365b6202"
 # Separate due to merge conflicts
-export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="registry.redhat.io/rhosdt/opentelemetry-target-allocator-rhel8@sha256:d82b2dc76f9086ebfc9a4e6617da33d3e6b53c36820270c9ada96797f98771b5"
+export OTEL_TARGET_ALLOCATOR_IMAGE_PULLSPEC="registry.redhat.io/rhosdt/opentelemetry-target-allocator-rhel8@sha256:b8ebb7c5ccb3f058adf2a5ce041047b9a1e4fd1aefa4cd1ba87bf05ae5b9452c"
 # Separate due to merge conflicts
-export OTEL_OPERATOR_IMAGE_PULLSPEC="registry.redhat.io/rhosdt/opentelemetry-rhel8-operator@sha256:5c45ff820d8bcbe60ffd9534bb8a1857deb4f4507beca0bba8bf980f447291b6"
+export OTEL_OPERATOR_IMAGE_PULLSPEC="registry.redhat.io/rhosdt/opentelemetry-rhel8-operator@sha256:140982bda69b683cfb65d053bb01937bb2d50bb16acf9a1a6fd8b4c5b5b9ea0e"
 # Separate due to merge conflicts
 # TODO, we used to set the proxy image per OCP version
 export OSE_KUBE_RBAC_PROXY_PULLSPEC="registry.redhat.io/openshift4/ose-kube-rbac-proxy@sha256:8204d45506297578c8e41bcc61135da0c7ca244ccbd1b39070684dfeb4c2f26c"
