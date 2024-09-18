@@ -34,7 +34,7 @@ spec:
     value: "true"
   - name: build-args
     value:
-      - REGISTRY=registry.stage.redhat.io
+      - REGISTRY=registry.redhat.io
     # Do not use hermetic for now as we are going to generate our manifest at build time. We need to pull in content.
   - name: hermetic
     value: "false"
