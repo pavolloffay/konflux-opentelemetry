@@ -33,3 +33,4 @@ LABEL com.redhat.component="opentelemetry-target-allocator-container" \
       io.openshift.tags="monitoring" \
       io.k8s.display-name="OpenTelemetry Target allocator"
 
+
