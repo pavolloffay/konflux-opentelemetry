@@ -1,0 +1,15 @@
+# https://olm.operatorframework.io/docs/reference/catalog-templates/#basic-template
+schema: olm.template.basic
+entries:
+  - schema: olm.package
+    name: opentelemetry-product
+    defaultChannel: stable
+  - schema: olm.channel
+    package: opentelemetry-product
+    name: stable
+    entries:
+      - name: opentelemetry-operator.v0.107.0-100
+        replaces: opentelemetry-operator.v0.107.0-4
+        skipRange: "\u003e=0.33.0 \u003c0.107.0-100"
+  - schema: olm.bundle
+    image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-bundle@sha256:9be78400553752cee3b9b82f2cbf7908eb866601943f7b5680a743dc28f1a648
