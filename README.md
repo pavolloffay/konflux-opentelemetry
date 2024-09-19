@@ -23,9 +23,9 @@ Open PR `Release - update bundle version` and update [patch_csv.yaml](./bundle-p
 1. Update `release` and `version` labels in [bundle dockerfile](./Dockerfile.bundle)
 
 Once the PR is merged and bundle is built. Open another PR `Release - update catalog` with:
- * Updated [catalog template](./catalog/catalog-template-fragment.yaml) with the new bundle (get the bundle pullspec from [Konflux](https://console.redhat.com/application-pipeline/workspaces/rhosdt/applications/otel/components/otel-bundle)):
+ * Updated [catalog template](./catalog/catalog-template.yaml) with the new bundle (get the bundle pullspec from [Konflux](https://console.redhat.com/application-pipeline/workspaces/rhosdt/applications/otel/components/otel-bundle)):
     ```bash
-    opm alpha render-template basic --output yaml catalog/catalog-template-fragment.yaml > catalog/opentelemetry-product/catalog.yaml && \
+    opm alpha render-template basic --output yaml catalog/catalog-template.yaml > catalog/opentelemetry-product/catalog.yaml && \
     sed -i 's#quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-bundle#registry.redhat.io/rhosdt/opentelemetry-operator-bundle#g' catalog/opentelemetry-product/catalog.yaml  && \
     opm validate catalog/opentelemetry-product/
    
