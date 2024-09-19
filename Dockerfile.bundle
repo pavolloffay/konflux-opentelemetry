@@ -53,6 +53,8 @@ LABEL release="0.107.0-100" \
       io.k8s.description="Bundle for OpenTelemetry operator" \
       # TODO check if this is correct
       com.redhat.component="rhosdt" \
+      io.openshift.tags="tracing" \
+      io.k8s.display-name="OpenTelemetry Operator Bundle" \
       url="https://github.com/open-telemetry/opentelemetry-operator" \
       vendor="Red Hat, Inc." \
       summary="OpenTelemetry operator bundle" \
