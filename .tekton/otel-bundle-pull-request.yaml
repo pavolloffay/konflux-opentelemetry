@@ -39,7 +39,7 @@ spec:
     value:
       - REGISTRY=registry.stage.redhat.io
   - name: hermetic
-    value: "false"
+    value: "true"
   pipelineRef:
     name: single-arch-build-pipeline
   workspaces:

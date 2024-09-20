@@ -38,6 +38,8 @@ spec:
       - linux/arm64
       - linux/ppc64le
       - linux/s390x
+  - name: hermetic
+    value: "true"
   pipelineSpec:
     finally:
       - name: show-sbom

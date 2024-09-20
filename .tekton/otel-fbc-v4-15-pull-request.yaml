@@ -38,6 +38,8 @@ spec:
     value:
       - localhost
       - linux/arm64
+  - name: hermetic
+    value: "true"
   pipelineSpec:
     finally:
       - name: show-sbom
