@@ -13,6 +13,12 @@ git submodule update --init --recursive
 podman build -t docker.io/user/otel-operator:$(date +%s) -f Dockerfile.operator 
 ```
 
+### Generate `requirements.txt` for python
+
+```bash
+ ~/.local/bin/pip-compile requirements.in --generate-hashes
+```
+
 ## Release
 
 Open PR `Release - update bundle version` and update [patch_csv.yaml](./bundle-patch/patch_csv.yaml) by submitting a PR with follow-up changes:
