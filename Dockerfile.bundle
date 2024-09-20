@@ -24,8 +24,9 @@ ARG REGISTRY=quay.io/redhat-user-workloads
 
 RUN ./update_bundle.sh && cat /manifests/opentelemetry-operator.clusterserviceversion.yaml /metadata/annotations.yaml
 
-#FROM registry.redhat.io/ubi8/ubi-minimal:8.10-1052.1724178568
-FROM registry.redhat.io/ubi9/ubi:latest as builder-runner
+FROM registry.redhat.io/ubi8/ubi-minimal:8.10-1052.1724178568
+# Change this when generating RPM pre-fetch
+#FROM registry.redhat.io/ubi9/ubi:latest as builder-runner
 
 WORKDIR /
 
