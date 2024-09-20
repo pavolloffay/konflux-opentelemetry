@@ -1,11 +1,10 @@
 # Based on ./gatekeeper-operator/bundle.Dockerfile
-FROM registry.redhat.io/ubi8/python-39:1-196.1725368453 as builder-runner
-
-#RUN microdnf install -y python3 python3-pip patch
-#RUN pip3 install --upgrade pip && pip3 install ruamel.yaml==0.17.9
+FROM registry.redhat.io/ubi9/ubi:latest as builder-runner
 
 USER root
 WORKDIR /
+
+RUN dnf install -y skopeo jq python3 python3-ruamel-yaml-clib python3-ruamel-yaml patch
 
 RUN mkdir /licenses
 COPY opentelemetry-operator/LICENSE /licenses/.
@@ -23,9 +22,7 @@ RUN ls /metadata -al
 # stage - registry.stage.redhat.io, prod - registry.redhat.io
 ARG REGISTRY=quay.io/redhat-user-workloads
 
-RUN (source /tmp/cachi2.env || true) || \
-    pip install -r requirements.txt &&  \
-    ./update_bundle.sh && cat /manifests/opentelemetry-operator.clusterserviceversion.yaml /metadata/annotations.yaml
+RUN ./update_bundle.sh && cat /manifests/opentelemetry-operator.clusterserviceversion.yaml /metadata/annotations.yaml
 
 FROM registry.redhat.io/ubi8/ubi-minimal:8.10-1052.1724178568
 
