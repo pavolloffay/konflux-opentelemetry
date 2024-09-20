@@ -24,7 +24,7 @@ RUN ls /metadata -al
 ARG REGISTRY=quay.io/redhat-user-workloads
 
 RUN (source /tmp/cachi2.env || true) || \
-    pip install -r requirements.txt && \
+    pip install -r requirements.txt &&  \
     ./update_bundle.sh && cat /manifests/opentelemetry-operator.clusterserviceversion.yaml /metadata/annotations.yaml
 
 FROM registry.redhat.io/ubi8/ubi-minimal:8.10-1052.1724178568

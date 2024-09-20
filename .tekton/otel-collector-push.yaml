@@ -26,10 +26,10 @@ spec:
     value: '{{source_url}}'
   - name: revision
     value: '{{revision}}'
-  - name: prefetch-input
-    value: '[{"type": "gomod", "path": "./redhat-opentelemetry-collector/_build"}, {"type": "rpm"}]'
+#  - name: prefetch-input
+#    value: '[{"type": "gomod", "path": "./redhat-opentelemetry-collector/_build"}, {"type": "rpm"}]'
   - name: hermetic
-    value: "true"
+    value: "false"
   - name: output-image
     value: quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-collector:{{revision}}
   - name: dockerfile
