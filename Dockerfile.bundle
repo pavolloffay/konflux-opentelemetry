@@ -5,6 +5,7 @@ FROM registry.redhat.io/ubi8/python-39:1-196.1725368453 as builder-runner
 #RUN pip3 install --upgrade pip && pip3 install ruamel.yaml==0.17.9
 
 USER root
+WORKDIR /
 
 RUN mkdir /licenses
 COPY opentelemetry-operator/LICENSE /licenses/.
