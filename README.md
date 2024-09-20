@@ -16,7 +16,7 @@ podman build -t docker.io/user/otel-operator:$(date +%s) -f Dockerfile.operator
 ### Generate `requirements.txt` for python
 
 ```bash
- ~/.local/bin/pip-compile requirements.in --generate-hashes
+ ~/.local/bin/pip-compile requirements-build.in --generate-hashes  --allow-unsafe 
 ```
 
 ## Release
