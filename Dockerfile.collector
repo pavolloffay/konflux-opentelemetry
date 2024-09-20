@@ -7,8 +7,6 @@ COPY redhat-opentelemetry-collector .
 # this directory is checked by ecosystem-cert-preflight-checks task in Konflux
 COPY redhat-opentelemetry-collector/LICENSE /licenses/
 
-RUN make ocb
-RUN ./bin/ocb --skip-compilation=true --config manifest.yaml 2>&1 | tee _build/build.log
 RUN CGO_ENABLED=1 GOEXPERIMENT=strictfipsruntime go build -C ./_build -mod=mod -tags strictfipsruntime -o opentelemetry-collector -trimpath -ldflags "-s -w"
 
 FROM registry.redhat.io/ubi8/ubi-minimal:8.10-1052.1724178568
