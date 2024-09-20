@@ -13,6 +13,18 @@ git submodule update --init --recursive
 podman build -t docker.io/user/otel-operator:$(date +%s) -f Dockerfile.operator 
 ```
 
+### Generate prefetch for RPM
+
+From [document](https://docs.google.com/document/d/1c58NGQPuuni2hFgz0Ll0vDj0IUvBHa7uF4eKnTVa5Sw/edit).
+
+```
+podman run --rm -v "$PWD:$PWD:z" -w "$PWD"  registry.redhat.io/ubi8/ubi-minimal:8.10-1052.1724178568  cp -r /etc/yum.repos.d/. .
+# Enable -source repositories: `enabled = 1`
+
+# Generate lock file
+rpm-lockfile-prototype -f /home/ploffay/projects/pavolloffay/konflux-opentelemetry/Dockerfile.collector  /home/ploffay/projects/pavolloffay/konflux-opentelemetry/rpms.in.yaml --outfile rpms.lock.yaml
+```
+
 ## Release
 
 Open PR `Release - update bundle version` and update [patch_csv.yaml](./bundle-patch/patch_csv.yaml) by submitting a PR with follow-up changes:
