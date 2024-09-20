@@ -1,2 +1,2 @@
 ruamel.yaml==0.17.9
-setuptools==75.1.0
+setuptools==40.8.0
