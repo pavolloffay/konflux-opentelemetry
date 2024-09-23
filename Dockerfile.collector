@@ -26,7 +26,7 @@ COPY redhat-opentelemetry-collector/configs/otelcol.yaml /etc/otelcol/config.yam
 ARG USER_UID=1001
 RUN useradd -u ${USER_UID} otelcol && usermod -a -G systemd-journal otelcol
 USER ${USER_UID}
-ENTRYPOINT ["/usr/bin/opentelemetry-operator"]
+ENTRYPOINT ["/usr/bin/opentelemetry-collector"]
 CMD ["--config", "/etc/otelcol/config.yaml"]
 
 LABEL com.redhat.component="opentelemetry-collector-container" \
