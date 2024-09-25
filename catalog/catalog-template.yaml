@@ -49,7 +49,7 @@ entries:
   name: stable
   package: opentelemetry-product
   schema: olm.channel
-- image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-bundle@sha256:27e5ec8b94d55423ffaf060d4c6dee41f6c959225cef91c4c9ac50f609adb9f9
+- image: quay.io/redhat-user-workloads/rhosdt-tenant/otel/opentelemetry-bundle@sha256:429bf978f34bbb73e588fd8c25a9e72c94d41ae0c2090f0b5e06752fd551ae64
   schema: olm.bundle
 - image: registry.redhat.io/rhosdt/opentelemetry-operator-bundle@sha256:bfc2ac2670869a21f5caf7861f8d06b6080dd2f0b3ee6e544aaa36ed8eba70f6
   schema: olm.bundle
