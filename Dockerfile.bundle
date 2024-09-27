@@ -1,5 +1,5 @@
 # Based on ./gatekeeper-operator/bundle.Dockerfile
-FROM registry.redhat.io/ubi9/ubi:latest as builder-runner
+FROM registry.redhat.io/ubi9/ubi@sha256:b00d5990a00937bd1ef7f44547af6c7fd36e3fd410e2c89b5d2dfc1aff69fe99 as builder-runner
 
 USER root
 WORKDIR /
@@ -24,7 +24,7 @@ ARG REGISTRY=quay.io/redhat-user-workloads
 
 RUN ./update_bundle.sh && cat /manifests/opentelemetry-operator.clusterserviceversion.yaml /metadata/annotations.yaml
 
-FROM registry.redhat.io/ubi8/ubi-minimal:8.10-1052.1724178568
+FROM registry.redhat.io/ubi8/ubi-minimal@sha256:7583ca0ea52001562bd81a961da3f75222209e6192e4e413ee226cff97dbd48c
 # Change this when generating RPM pre-fetch
 #FROM registry.redhat.io/ubi9/ubi:latest as builder-runner
 
